@@ -39,11 +39,17 @@ TestServer is a Dockerized service with a SignalR hub and REST API. It can be us
    docker-compose up --build
    ```
 
-5. The TestServer service will be available at [http://localhost:5000](http://localhost:5000).
+5. The TestServer service will be available at [http://localhost](http://localhost).
+
+6. You can change the port that the TestServer service runs on by editing the `docker-compose.yml` file:
+    ```javascript
+    ports:
+    - "80:80" // change left hand side to the port you want. e.g. for port 5000 change to "5000:80" 
+    ```
 
 ## API Reference
 
-The TestServer API is documented using Swagger. Once the service is running, you can access the Swagger UI at [http://localhost:5000/swagger](http://localhost:5000/swagger) to explore the available endpoints.
+The TestServer API is documented using Swagger. Once the service is running, you can access the Swagger UI at [http://localhost/swagger](http://localhost/swagger) to explore the available endpoints.
 
 ### Sending a message to the SignalR hub
 
@@ -57,19 +63,8 @@ Parameters:
 Example cURL command:
 
 ```shell
-curl -X POST -H "Content-Type: application/json" -d '{"message": "Hello"}' http://localhost:5000/api/messages/clients.receiveMessage
+curl -X POST -H "Content-Type: application/json" -d '{"message": "Hello"}' http://localhos/api/messages/clients.receiveMessage
 ```
-
-### Simulating HTTP responses
-
-The TestServer also provides additional API endpoints to simulate HTTP responses with custom status codes. These endpoints allow you to test how your application handles different HTTP responses.
-
-- `GET /responses/{statusCode}`: Returns a response with the specified status code.
-- `POST /responses/{statusCode}`: Returns a response with the specified status code.
-- `PUT /responses/{statusCode}`: Returns a response with the specified status code.
-- `DELETE /responses/{statusCode}`: Returns a response with the specified status code.
-
-Replace `{statusCode}` with the desired HTTP status code.
 
 ### SignalR Hub
 
@@ -79,7 +74,7 @@ Example SignalR client code:
 
 ```javascript
 const connection = new signalR.HubConnectionBuilder()
-  .withUrl("http://localhost:5000/hub/v1/notifications")
+  .withUrl("http://localhost/hub/v1/notifications")
   .build();
 
 connection.on("receiveMessage", (message) => {
@@ -94,6 +89,17 @@ connection.start()
     console.error("Error connecting to the hub:", error);
   });
 ```
+
+### Simulating HTTP responses
+
+The TestServer also provides additional API endpoints to simulate HTTP responses with custom status codes. These endpoints allow you to test how your application handles different HTTP responses.
+
+- `GET /responses/{statusCode}`: Returns a response with the specified status code.
+- `POST /responses/{statusCode}`: Returns a response with the specified status code.
+- `PUT /responses/{statusCode}`: Returns a response with the specified status code.
+- `DELETE /responses/{statusCode}`: Returns a response with the specified status code.
+
+Replace `{statusCode}` with the desired HTTP status code.
 
 ## License
 
