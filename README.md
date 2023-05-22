@@ -6,9 +6,11 @@ TestServer is a Dockerized service with a SignalR hub and REST API. It can be us
 
 - SignalR hub for real-time communication with connected clients
 - Minimal POST REST API to send messages to the SignalR hub
-- Additional API endpoints to simulate HTTP responses with custom status codes
 - Configurable CORS support for allowed origins
 - Swagger documentation for the API
+
+### Additional Features
+- Additional API endpoints to simulate HTTP responses with custom status codes
 
 ## Prerequisites
 
